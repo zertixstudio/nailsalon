@@ -497,19 +497,63 @@
   .roster-index{font-size:14px; font-family:'Hanken Grotesk',sans-serif; color:rgba(27,24,22,0.4);}
   .roster-spec{font-size:13px; letter-spacing:0.05em; text-transform:uppercase; color:rgba(27,24,22,0.55); white-space:nowrap;}
 
-  /* ============ REVIEWS ============ */
-  .reviews{background:var(--ink); color:var(--porcelain);}
+    /* ============ REVIEWS TICKER ============ */
+  .reviews{
+    background:var(--ink); 
+    color:var(--porcelain);
+    overflow: hidden; /* Ticker ko screen se bahar na jane dein */
+    padding: 120px 0 140px; /* Neeche thora zyada space taake ticker clear lage */
+  }
   .reviews .eyebrow{color:var(--sand);}
   .reviews .eyebrow::before{background:var(--sand);}
-  .review-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:28px;}
-  @media(max-width:880px){.review-grid{grid-template-columns:1fr; gap:20px;}}
+  .reviews .section-head{ margin-bottom: 60px; }
+
+  /* Ticker Wrapper with Fade Edges */
+  .review-ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    /* Left aur Right side ke corners par dark fade */
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+
+  /* Ticker Track (Jo move karega) */
+  .review-ticker {
+    display: flex;
+    gap: 28px;
+    width: max-content;
+    animation: ticker-scroll 40s linear infinite;
+  }
+  
+  /* Jab mouse upar jaye toh ticker ruk jaye */
+  .review-ticker:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes ticker-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); } /* Half scroll tak jayega phir loop */
+  }
+
   .review-card{
-    background:rgba(250,246,241,0.04); border:1px solid rgba(250,246,241,0.12);
-    border-radius:2px; padding:32px; display:flex; flex-direction:column; justify-content:space-between; min-height:220px;
+    background:rgba(250,246,241,0.04); 
+    border:1px solid rgba(250,246,241,0.12);
+    border-radius:4px; 
+    padding:32px; 
+    display:flex; flex-direction:column; justify-content:space-between; 
+    width: 400px; /* Fixed width taake cards barabar rahein */
+    min-height: 240px;
+    flex-shrink: 0; /* Cards shrink na hon */
   }
   .review-stars{color:var(--terracotta-hover); font-size:14px; letter-spacing:2px;}
   .review-text{font-family:'Fraunces',serif; font-size:18px; font-style:italic; line-height:1.5; margin-top:16px; color:rgba(250,246,241,0.92);}
   .review-meta{margin-top:24px; font-size:13px; color:rgba(250,246,241,0.55); letter-spacing:0.03em;}
+
+  @media(max-width:880px){
+    .review-card { width: 300px; padding: 24px; }
+    .review-text { font-size: 16px; }
+  }
 
   /* ============ LOCATION / CONTACT ============ */
   .visit{background:var(--porcelain);}
@@ -817,7 +861,35 @@
       <div class="eyebrow" data-i18n="reviews.eyebrow">Quem Visitou</div>
       <h2 data-i18n="reviews.title">334 razões para confiar.</h2>
     </div>
-    <div class="review-grid reveal">
+  </div>
+  
+  <!-- Ticker Wrapper -->
+  <div class="review-ticker-wrap">
+    <div class="review-ticker">
+      <!-- Set 1 -->
+      <div class="review-card">
+        <div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-i18n="reviews.r1">"Atendimento impecável, ambiente calmo e resultado perfeito. Já é a minha rotina mensal."</p>
+        </div>
+        <div class="review-meta">Júlia R.</div>
+      </div>
+      <div class="review-card">
+        <div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-i18n="reviews.r2">"Profissionais atentas a cada detalhe. Saí com as unhas exatamente como imaginei."</p>
+        </div>
+        <div class="review-meta">Beatriz G.</div>
+      </div>
+      <div class="review-card">
+        <div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-i18n="reviews.r3">"Espaço bonito, equipa simpática, e a relação qualidade-preço é excelente. Recomendo!"</p>
+        </div>
+        <div class="review-meta">Emma D.</div>
+      </div>
+
+      <!-- Set 2 (Seamless Loop ke liye duplicate) -->
       <div class="review-card">
         <div>
           <div class="review-stars">★★★★★</div>
