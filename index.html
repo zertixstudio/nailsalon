@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G Beauty Concept — Porto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    /* ============ CUSTOM PRELOADER ============ */
+  .preloader {
+    position: fixed;
+    inset: 0;
+    background: var(--porcelain);
+    z-index: 9998;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  .preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .preloader-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+  }
+  .preloader-logo span {
+    color: var(--terracotta);
+    font-style: italic;
+  }
+  .preloader-line {
+    width: 0;
+    height: 1.5px;
+    background: var(--terracotta);
+    margin-top: 18px;
+    animation: drawLine 1.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+  @keyframes drawLine {
+    to { width: 140px; }
+  }
+
+  /* ============ MAGNETIC BUTTONS ============ */
+  .btn-primary, .navcta, .drawer-cta {
+    transition: background 0.2s ease, transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform;
+  }
+  :root{
+    --porcelain:#FAF6F1;
+    --ink:#1B1816;
+    --terracotta:#A8432F;
+    --terracotta-hover:#C75C3F;
+    --sand:#D9C2A6;
+    --azulejo:#6B7A6E;
+    --line: rgba(27,24,22,0.12);
+    --max: 1180px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--porcelain);
+    color:var(--ink);
+    font-family:'Hanken Grotesk', sans-serif;
+    font-size:16px;
+    line-height:1.5;
+    overflow-x:hidden;
+    cursor: none; /* Hide default cursor for custom cursor effect */
+  }
+  img{max-width:100%; display:block;}
+  a{color:inherit; text-decoration:none;}
+
+  /* ============ CUSTOM CURSOR ============ */
+  .cursor-dot, .cursor-outline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+  }
+  .cursor-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--terracotta);
+  }
+  .cursor-outline {
+    width: 35px;
+    height: 35px;
+    border: 1.5px solid rgba(168, 67, 47, 0.6);
+    transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  }
+  .cursor-outline.hovered {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(168, 67, 47, 0.15);
+    border-color: transparent;
+  }
+  @media (hover: none) {
+    .cursor-dot, .cursor-outline { display: none; }
+    body { cursor: auto; }
+  }
+
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 32px;}
+  @media(max-width:700px){.wrap{padding:0 20px;}}
+
+  .eyebrow{
+    font-family:'Hanken Grotesk', sans-serif;
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    font-weight:600;
+    color:var(--terracotta);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:22px; height:1px;
+    background:var(--terracotta);
+    display:inline-block;
+  }
+
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+    line-height:1.05;
+  }
+
+  /* ============ LANG SWITCH (inside header) ============ */
+  .langswitch{
+    display:flex; gap:14px; margin-right:28px; padding-right:28px;
+    border-right:1px solid rgba(250,246,241,0.25);
+  }
+  header.scrolled .langswitch{border-right-color:rgba(27,24,22,0.2);}
+  .lang-btn{
+    background:none; border:none; cursor:pointer; font-family:'Hanken Grotesk',sans-serif;
+    font-size:11px; letter-spacing:0.08em; text-transform:uppercase; padding:2px 0;
+    color:rgba(250,246,241,0.55); transition:color .2s ease, border-color .2s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.scrolled .lang-btn{color:rgba(27,24,22,0.55);}
+  .lang-btn.active{color:var(--porcelain); border-bottom-color:var(--terracotta-hover);}
+  header.scrolled .lang-btn.active{color:var(--ink); border-bottom-color:var(--terracotta);}
+  .lang-btn:hover{color:var(--porcelain);}
+  header.scrolled .lang-btn:hover{color:var(--ink);}
+  @media(max-width:880px){
+    .langswitch{margin-right:14px; padding-right:0; border-right:none;}
+  }
+
+  /* ============ NAV ============ */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:150;
+    background:transparent;
+    backdrop-filter:blur(0px);
+    -webkit-backdrop-filter:blur(0px);
+    border-bottom:1px solid transparent;
+    transition: background .3s ease, backdrop-filter .3s ease, border-color .3s ease;
+  }
+  header.scrolled{
+    background:rgba(250,246,241,0.75);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 32px;
+  }
+  @media(max-width:700px){
+    nav{padding:16px 20px;}
+  }
+  .logo{
+    font-family:'Fraunces', serif;
+    font-size:21px;
+    letter-spacing:0.01em;
+    color:var(--porcelain);
+    transition:color .3s ease;
+    white-space: nowrap;
+  }
+  header.scrolled .logo{color:var(--ink);}
+    .logo span {
+    color: var(--terracotta); /* Button wala solid color */
+    font-style: italic;
+    font-weight: 600; /* Thoda bold kar diya taake dab na ho */
+  }
+  /* Jab navbar white ho jaye tab bhi same solid color rahega */
+  header.scrolled .logo span {
+    color: var(--terracotta); 
+  }
+  .nav-right-actions{
+    display:flex;
+    align-items:center;
+  }
+
+  .navlinks{display:flex; gap:36px; font-size:13px; letter-spacing:0.04em; text-transform:uppercase; font-weight:500; margin-right:36px;}
+  .navlinks a{position:relative; padding-bottom:4px; color:rgba(250,246,241,0.92); transition:color .3s ease;}
+  header.scrolled .navlinks a{color:var(--ink);}
+  .navlinks a::after{
+    content:''; position:absolute; left:0; bottom:0; width:0; height:1px;
+    background:var(--terracotta); transition:width .25s ease;
+  }
+  .navlinks a:hover::after{width:100%;}
+    .navcta{
+    background: transparent; 
+    border: 1px solid rgba(250,246,241,0.5); /* Halka sa transparent border */
+    color:var(--porcelain);
+    padding:11px 26px; 
+    border-radius: 30px; /* Gol shape (Pill shape) ke liye */
+    font-size:12px; letter-spacing:0.06em; text-transform:uppercase; font-weight:600;
+    transition: all .3s ease; /* Smooth transition */
+  }
+  /* Jab mouse upar jaye toh solid terracotta ho jaye */
+  .navcta:hover{
+    background: var(--terracotta); 
+    border-color: var(--terracotta);
+    color: var(--porcelain);
+  }
+  
+  /* Jab scrol karke navbar white ho jaye, toh button ka color dark ho jaye */
+  header.scrolled .navcta{
+    background: transparent;
+    border-color: rgba(27,24,22,0.3);
+    color: var(--ink);
+  }
+  header.scrolled .navcta:hover{
+    background: var(--terracotta);
+    border-color: var(--terracotta);
+    color: var(--porcelain);
+  }
+  
+  .navtoggle{display:none; background:none; border:none; cursor:pointer; padding:4px;}
+  .navtoggle svg rect{fill:var(--porcelain); transition:fill .3s ease;}
+  header.scrolled .navtoggle svg rect{fill:var(--ink);}
+  
+  @media(max-width:880px){
+    .navlinks, .navcta{display:none;}
+    .navtoggle{display:block;}
+  }
+
+  /* mobile drawer */
+  .drawer{
+    position:fixed; inset:0; background:var(--ink); z-index:300;
+    display:flex; flex-direction:column; justify-content:center; align-items:center; gap:24px;
+    padding:40px; transform:translateY(-100%); transition:transform .4s ease;
+  }
+  .drawer.open{transform:translateY(0);}
+  .drawer a{color:var(--porcelain); font-family:'Fraunces',serif; font-size:28px;}
+  .drawer .drawer-cta{
+    background:var(--terracotta);
+    color:var(--porcelain);
+    font-family:'Hanken Grotesk', sans-serif;
+    font-size:14px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    padding:14px 32px;
+    border-radius:30px;
+    margin-bottom:12px;
+    width:100%;
+    text-align:center;
+    max-width:280px;
+  }
+  .drawer-close{position:absolute; top:24px; right:24px; background:none; border:none; color:var(--porcelain); font-size:36px; cursor:pointer;}
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex; align-items:center;
+    padding-top:90px;
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute; inset:0; z-index:0;
+  }
+  /* Video Background Styles */
+  .hero-bg video {
+    width:100%; height:100%; object-fit:cover;
+    filter:saturate(0.92) brightness(0.78);
+  }
+  .hero-bg::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(100deg, rgba(27,24,22,0.78) 0%, rgba(27,24,22,0.5) 45%, rgba(168,67,47,0.25) 100%);
+  }
+  .hero-inner{position:relative; z-index:2; color:var(--porcelain); padding-bottom:80px;}
+  .hero .eyebrow{color:var(--sand);}
+  .hero .eyebrow::before{background:var(--sand);}
+  .hero h1{
+    font-size:clamp(42px, 8vw, 96px);
+    margin-top:18px;
+    max-width:880px;
+  }
+  .hero h1 em{font-style:italic; color:var(--sand); font-weight:400;}
+  .hero-sub{
+    margin-top:22px; max-width:480px; font-size:17px;
+    color:rgba(250,246,241,0.82); font-weight:400;
+  }
+  .hero-actions{display:flex; gap:16px; margin-top:38px; flex-wrap:wrap; align-items:center;}
+  .btn-primary{
+    background:var(--terracotta); color:var(--porcelain);
+    padding:16px 34px; font-size:13px; letter-spacing:0.06em; text-transform:uppercase; font-weight:600;
+    border-radius:30px; transition:background .2s ease, transform .2s ease; display:inline-block;
+  }
+  .btn-primary:hover{background:var(--terracotta-hover); transform:translateY(-1px);}
+  .btn-ghost{
+    border:1px solid rgba(250,246,241,0.4); color:var(--porcelain);
+    padding:16px 34px; font-size:13px; letter-spacing:0.06em; text-transform:uppercase; font-weight:600;
+    border-radius:30px; transition:border-color .2s ease, background .2s ease;
+  }
+  .btn-ghost:hover{border-color:var(--porcelain); background:rgba(250,246,241,0.08);}
+
+  .hero-rating{
+    position:absolute; right:32px; bottom:48px; z-index:2;
+    color:var(--porcelain); text-align:right;
+  }
+  @media(max-width:880px){.hero-rating{display:none;}}
+  .rating-stars{font-size:18px; letter-spacing:2px; color:var(--sand);}
+  .rating-num{font-family:'Fraunces',serif; font-size:38px; line-height:1;}
+  .rating-count{font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:rgba(250,246,241,0.7); margin-top:4px;}
+
+  /* ============ MARQUEE STRIP ============ */
+  .marquee{
+    background:var(--ink); color:var(--sand);
+    padding:16px 0; overflow:hidden; white-space:nowrap;
+    border-top:1px solid rgba(250,246,241,0.1); border-bottom:1px solid rgba(250,246,241,0.1);
+  }
+  .marquee-track{
+    display:inline-flex; gap:48px; animation:scroll-left 32s linear infinite;
+    font-family:'Fraunces', serif; font-size:15px; font-style:italic;
+  }
+  .marquee-track span{display:flex; align-items:center; gap:48px;}
+  .marquee-track .dot{color:var(--terracotta); font-style:normal;}
+  @keyframes scroll-left{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+
+  /* ============ SECTION GENERIC ============ */
+  section{padding:120px 0;}
+  @media(max-width:700px){section{padding:80px 0;}}
+  .section-head{max-width:640px; margin-bottom:64px;}
+  .section-head h2{font-size:clamp(32px,5vw,52px); margin-top:16px;}
+  .section-head p{margin-top:18px; font-size:16px; color:rgba(27,24,22,0.65); max-width:520px;}
+
+  /* ============ ABOUT / INTRO ============ */
+  .about{background:var(--porcelain);}
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;}
+  @media(max-width:880px){.about-grid{grid-template-columns:1fr; gap:40px;}}
+  .about-img-wrap{position:relative;}
+  .about-img-wrap img{border-radius:2px; width:100%; height:560px; object-fit:cover;}
+  .about-img-tag{
+    position:absolute; bottom:-24px; left:-24px; background:var(--terracotta); color:var(--porcelain);
+    padding:20px 24px; max-width:240px; font-family:'Fraunces',serif; font-size:14px; font-style:italic;
+    border-radius:2px;
+  }
+  @media(max-width:880px){.about-img-tag{left:16px; bottom:16px;}}
+  .about-copy p{font-size:17px; color:rgba(27,24,22,0.72); margin-top:20px;}
+  .about-copy p.lead{font-size:21px; color:var(--ink); font-family:'Fraunces',serif; font-style:italic; line-height:1.45;}
+  .stat-row{display:flex; gap:40px; margin-top:44px; flex-wrap:wrap;}
+  .stat-num{font-family:'Fraunces',serif; font-size:42px; color:var(--terracotta);}
+  .stat-label{font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:rgba(27,24,22,0.55); margin-top:6px;}
+
+  /* ============ RITUAL / SERVICES ============ */
+  .ritual{background:var(--ink); color:var(--porcelain);}
+  .ritual .eyebrow{color:var(--sand);}
+  .ritual .eyebrow::before{background:var(--sand);}
+  .ritual .section-head p{color:rgba(250,246,241,0.6);}
+  .ritual-list{border-top:1px solid rgba(250,246,241,0.15);}
+  .ritual-item{
+    display:grid; grid-template-columns:90px 1fr 260px 110px;
+    align-items:center; gap:24px;
+    padding:32px 0; border-bottom:1px solid rgba(250,246,241,0.15);
+    transition:padding-left .3s ease;
+    cursor:default;
+  }
+  .ritual-item:hover{padding-left:14px; background:rgba(250,246,241,0.03);}
+  .ritual-step{font-family:'Fraunces',serif; font-style:italic; font-size:15px; color:var(--terracotta-hover);}
+  .ritual-name{font-family:'Fraunces',serif; font-size:26px;}
+  .ritual-name small{display:block; font-family:'Hanken Grotesk',sans-serif; font-size:13px; color:rgba(250,246,241,0.55); font-weight:400; margin-top:6px;}
+  .ritual-duration{font-size:13px; color:rgba(250,246,241,0.5); letter-spacing:0.03em;}
+  .ritual-price{font-family:'Fraunces',serif; font-size:22px; text-align:right;}
+  @media(max-width:760px){
+    .ritual-item{grid-template-columns:1fr; gap:6px; padding:24px 0;}
+    .ritual-price{text-align:left; margin-top:6px;}
+  }
+
+  /* ============ GALLERY ============ */
+    /* ============ GALLERY ============ */
+  .gallery{background:var(--porcelain);}
+  .gallery-grid{
+    display:grid; grid-template-columns:repeat(4, 1fr); grid-auto-rows:240px; gap:16px;
+  }
+  .gallery-item{
+    position: relative; overflow:hidden; border-radius:4px; display:block; background:var(--ink);
+  }
+  .gallery-item img{
+    width:100%; height:100%; object-fit:cover; 
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), filter 0.4s ease;
+    filter: grayscale(40%) brightness(0.85); /* Halka sa grey taake hover par color pop lage */
+  }
+  .gallery-item:hover img{
+    transform:scale(1.08);
+    filter: grayscale(0%) brightness(1); /* Hover par full color */
+  }
+  
+  /* Hover par aane wala Dark Overlay */
+  .gallery-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(27,24,22,0.85) 0%, rgba(27,24,22,0) 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .gallery-item:hover::after {
+    opacity: 1;
+  }
+
+  /* Hover par aane wala Text */
+  .gallery-text {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    z-index: 2;
+    color: var(--porcelain);
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-style: italic;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .gallery-text::after {
+    content: '→';
+    font-style: normal;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 16px;
+  }
+  .gallery-item:hover .gallery-text {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .gallery-item:nth-child(1){grid-column:span 2; grid-row:span 2;}
+  .gallery-item:nth-child(4){grid-column:span 2;}
+  
+  /* Staggered Animation (Scroll par ek ek karke khulne ke liye) */
+  .gallery-grid.reveal .gallery-item {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .gallery-grid.reveal.in .gallery-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .gallery-grid.reveal.in .gallery-item:nth-child(1) { transition-delay: 0.1s; }
+  .gallery-grid.reveal.in .gallery-item:nth-child(2) { transition-delay: 0.2s; }
+  .gallery-grid.reveal.in .gallery-item:nth-child(3) { transition-delay: 0.3s; }
+  .gallery-grid.reveal.in .gallery-item:nth-child(4) { transition-delay: 0.4s; }
+  .gallery-grid.reveal.in .gallery-item:nth-child(5) { transition-delay: 0.5s; }
+  .gallery-grid.reveal.in .gallery-item:nth-child(6) { transition-delay: 0.6s; }
+
+  @media(max-width:880px){
+    .gallery-grid{grid-template-columns:repeat(2,1fr); grid-auto-rows:180px;}
+    .gallery-grid a:nth-child(1){grid-column:span 2; grid-row:span 2;}
+    .gallery-text { font-size: 16px; bottom: 16px; left: 16px; }
+  }
+
+  /* ============ TEAM / SIGNATURE ROSTER ============ */
+  .roster{background:var(--sand); color:var(--ink); overflow:hidden;}
+  .roster .eyebrow{color:var(--terracotta);}
+  .roster-track-wrap{margin-top:20px; border-top:1px solid rgba(27,24,22,0.15);}
+  .roster-row{
+    display:flex; align-items:baseline; justify-content:space-between;
+    padding:26px 0; border-bottom:1px solid rgba(27,24,22,0.15);
+    gap:20px;
+  }
+  .roster-name{
+    font-family:'Fraunces',serif; font-size:clamp(26px,4vw,44px); display:flex; align-items:baseline; gap:18px;
+    transition:color .25s ease, transform .25s ease;
+  }
+  .roster-row:hover .roster-name{color:var(--terracotta); transform:translateX(8px);}
+  .roster-index{font-size:14px; font-family:'Hanken Grotesk',sans-serif; color:rgba(27,24,22,0.4);}
+  .roster-spec{font-size:13px; letter-spacing:0.05em; text-transform:uppercase; color:rgba(27,24,22,0.55); white-space:nowrap;}
+
+  /* ============ REVIEWS ============ */
+  .reviews{background:var(--ink); color:var(--porcelain);}
+  .reviews .eyebrow{color:var(--sand);}
+  .reviews .eyebrow::before{background:var(--sand);}
+  .review-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:28px;}
+  @media(max-width:880px){.review-grid{grid-template-columns:1fr; gap:20px;}}
+  .review-card{
+    background:rgba(250,246,241,0.04); border:1px solid rgba(250,246,241,0.12);
+    border-radius:2px; padding:32px; display:flex; flex-direction:column; justify-content:space-between; min-height:220px;
+  }
+  .review-stars{color:var(--terracotta-hover); font-size:14px; letter-spacing:2px;}
+  .review-text{font-family:'Fraunces',serif; font-size:18px; font-style:italic; line-height:1.5; margin-top:16px; color:rgba(250,246,241,0.92);}
+  .review-meta{margin-top:24px; font-size:13px; color:rgba(250,246,241,0.55); letter-spacing:0.03em;}
+
+  /* ============ LOCATION / CONTACT ============ */
+  .visit{background:var(--porcelain);}
+  .visit-grid{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--line); border-radius:2px; overflow:hidden;}
+  @media(max-width:880px){.visit-grid{grid-template-columns:1fr;}}
+  .visit-info{padding:56px; background:var(--porcelain);}
+  .visit-info h3{font-size:28px; margin-bottom:24px;}
+  .visit-row{display:flex; gap:16px; padding:16px 0; border-bottom:1px solid var(--line);}
+  .visit-row:last-child{border-bottom:none;}
+  .visit-row .ico{color:var(--terracotta); font-size:13px; letter-spacing:0.06em; text-transform:uppercase; font-weight:600; min-width:90px;}
+  .visit-row .val{font-size:15px; color:rgba(27,24,22,0.78);}
+  .visit-map{min-height:420px; position:relative;}
+  .visit-map iframe{width:100%; height:100%; min-height:420px; border:0; filter:grayscale(0.3) contrast(1.05);}
+  .visit-cta{margin-top:32px;}
+
+  /* ============ FOOTER ============ */
+  footer{background:var(--ink); color:rgba(250,246,241,0.6); padding:64px 0 32px;}
+  .footer-top{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:32px; padding-bottom:40px; border-bottom:1px solid rgba(250,246,241,0.12);}
+  .footer-logo{font-family:'Fraunces',serif; font-size:26px; color:var(--porcelain);}
+  .footer-logo span{color:var(--terracotta-hover); font-style:italic;}
+  .footer-links{display:flex; gap:48px; flex-wrap:wrap;}
+  .footer-col h4{font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--sand); margin-bottom:14px;}
+  .footer-col a{display:block; font-size:14px; margin-bottom:10px; color:rgba(250,246,241,0.65);}
+  .footer-col a:hover{color:var(--porcelain);}
+  .footer-bottom{display:flex; justify-content:space-between; padding-top:28px; font-size:12px; flex-wrap:wrap; gap:12px;}
+
+  /* reveal on scroll */
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  @media(prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+    .marquee-track{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  :focus-visible{outline:2px solid var(--terracotta); outline-offset:3px;}
+
+    /* ============ MOBILE SPACING ADJUSTMENTS ============ */
+  @media(max-width: 880px) {
+    /* Side margins barhane ke liye */
+    .wrap {
+      padding: 0 28px; /* Pehle 20px tha */
+    }
+    
+    /* Sections ke upar neeche space barhane ke liye */
+    section {
+      padding: 90px 0; /* Pehle 80px tha */
+    }
+    
+    /* Heading aur paragraph ke darmiyan space */
+    .section-head {
+      margin-bottom: 50px;
+    }
+    .section-head p {
+      margin-top: 22px;
+    }
+    
+    /* About section ki image aur text mein space */
+    .about-grid {
+      gap: 50px;
+    }
+    .about-copy p.lead {
+      font-size: 22px;
+    }
+    
+    /* Ritual (Services) list mein space */
+    .ritual-item {
+      padding: 28px 0;
+    }
+    
+    /* Gallery grid mein space */
+    .gallery-grid {
+      gap: 16px;
+    }
+  }
+  
+  @media(max-width: 500px) {
+    /* Bohot choti screens (iPhone SE waghaira) par side margin thoda aur */
+    .wrap {
+      padding: 0 24px;
+    }
+    section {
+      padding: 80px 0;
+    }
+  } 
+</style>
+</head>
+<body>
+  <!-- Custom Preloader -->
+<div class="preloader" id="preloader">
+  <div class="preloader-logo">G <span>Beauty</span> Concept</div>
+  <div class="preloader-line"></div>
+</div>
+
+<!-- Custom Cursor Elements -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-outline" id="cursorOutline"></div>
+
+<header id="siteHeader">
+  <nav class="wrap">
+    <div class="logo">G <span>Beauty</span> Concept</div>
+    <div class="nav-right-actions">
+      <div class="langswitch">
+        <button class="lang-btn active" data-lang="pt">PT</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="es">ES</button>
+      </div>
+      <div class="navlinks">
+        <a href="#ritual" data-i18n="nav.services">Serviços</a>
+        <a href="#galeria" data-i18n="nav.gallery">Galeria</a>
+        <a href="#equipa" data-i18n="nav.team">Equipa</a>
+        <a href="#visitar" data-i18n="nav.visit">Visitar</a>
+      </div>
+      <a class="navcta" href="https://www.fresha.com/a/g-beauty-concept-porto-rua-regulo-magauanha-91-i59nqaa0/all-offer?venue=true" target="_blank" rel="noopener" data-i18n="nav.book">Reservar</a>
+      <button class="navtoggle" id="navToggle" aria-label="Abrir menu">
+        <svg width="26" height="20" viewBox="0 0 26 20"><rect width="26" height="1.6"/><rect y="9" width="26" height="1.6"/><rect y="18" width="26" height="1.6"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div class="drawer" id="drawer">
+  <button class="drawer-close" id="drawerClose" aria-label="Fechar menu">&times;</button>
+  <a class="drawer-cta" href="https://www.fresha.com/a/g-beauty-concept-porto-rua-regulo-magauanha-91-i59nqaa0/all-offer?venue=true" target="_blank" rel="noopener" data-i18n="nav.book">Reservar</a>
+  <a href="#ritual" id="link-ritual">Serviços</a>
+  <a href="#galeria" id="link-galeria">Galeria</a>
+  <a href="#equipa" id="link-equipa">Equipa</a>
+  <a href="#visitar" id="link-visitar">Visitar</a>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-bg">
+    <!-- Nail/Hand Beauty Video Background -->
+    <video id="heroVideo" autoplay muted loop playsinline>
+      <source src="hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="wrap hero-inner">
+    <div class="eyebrow" data-i18n="hero.eyebrow">Porto · Santo Ildefonso</div>
+    <h1 data-i18n="hero.title">Beleza, <em>sentida</em><br>com intenção.</h1>
+    <p class="hero-sub" data-i18n="hero.sub">Um coletivo de beleza no coração do Porto — unhas, estética e cuidados corporais pensados ao detalhe.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="https://www.fresha.com/a/g-beauty-concept-porto-rua-regulo-magauanha-91-i59nqaa0/all-offer?venue=true" target="_blank" rel="noopener" data-i18n="hero.book">Reservar Agora</a>
+      <a class="btn-ghost" href="#ritual" data-i18n="hero.explore">Ver Serviços</a>
+    </div>
+  </div>
+  <div class="hero-rating">
+    <div class="rating-stars">★★★★★</div>
+    <div class="rating-num">5.0</div>
+    <div class="rating-count" data-i18n="hero.reviews">334 avaliações</div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>UNHAS <span class="dot">●</span> ESTÉTICA <span class="dot">●</span> PESTANAS <span class="dot">●</span> SOBRANCELHAS <span class="dot">●</span> MASSAGEM <span class="dot">●</span> DEPILAÇÃO</span>
+    <span>UNHAS <span class="dot">●</span> ESTÉTICA <span class="dot">●</span> PESTANAS <span class="dot">●</span> SOBRANCELHAS <span class="dot">●</span> MASSAGEM <span class="dot">●</span> DEPILAÇÃO</span>
+  </div>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<section class="about">
+  <div class="wrap about-grid">
+    <div class="about-img-wrap reveal">
+      <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80" alt="Espaço G Beauty Concept">
+      <div class="about-img-tag" data-i18n="about.tag">"Cada detalhe pensado para uma experiência única."</div>
+    </div>
+    <div class="about-copy reveal">
+      <div class="eyebrow" data-i18n="about.eyebrow">Sobre Nós</div>
+      <h2 style="margin-top:16px; font-size:clamp(28px,4vw,42px);" data-i18n="about.title">Um novo conceito de beleza no Porto.</h2>
+      <p class="lead" data-i18n="about.lead">Não somos apenas um salão — somos um coletivo.</p>
+      <p data-i18n="about.body">Reunimos especialistas em unhas, estética, pestanas e corpo sob um só teto, na Rua Régulo Magauanha. Cada ritual é conduzido com calma, precisão and atenção ao detalhe — para que saia sempre a sentir-se melhor do que entrou.</p>
+      <div class="stat-row">
+        <div>
+          <div class="stat-num">5.0</div>
+          <div class="stat-label" data-i18n="about.stat1">334 Avaliações</div>
+        </div>
+        <div>
+          <div class="stat-num">8</div>
+          <div class="stat-label" data-i18n="about.stat2">Especialistas</div>
+        </div>
+        <div>
+          <div class="stat-num">92+</div>
+          <div class="stat-label" data-i18n="about.stat3">Serviços</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RITUAL / SERVICES ============ -->
+<section class="ritual" id="ritual">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="ritual.eyebrow">O Ritual</div>
+      <h2 data-i18n="ritual.title">Das mãos ao corpo.</h2>
+      <p data-i18n="ritual.sub">Os nossos serviços seguem a ordem natural do cuidado — escolha onde quer começar.</p>
+    </div>
+    <div class="ritual-list reveal">
+      <div class="ritual-item">
+        <div class="ritual-step">01 — Mãos</div>
+        <div class="ritual-name" data-i18n="ritual.s1.name">Blindagem + Verniz Gel<small data-i18n="ritual.s1.desc">Gel polish de longa duração</small></div>
+        <div class="ritual-duration">1h – 1h30</div>
+        <div class="ritual-price">€22</div>
+      </div>
+      <div class="ritual-item">
+        <div class="ritual-step">02 — Mãos</div>
+        <div class="ritual-name" data-i18n="ritual.s2.name">Manutenção<small data-i18n="ritual.s2.desc">Renovação de gel ou acrílico</small></div>
+        <div class="ritual-duration">1h30 – 2h</div>
+        <div class="ritual-price" data-i18n="ritual.s2.price">desde €32</div>
+      </div>
+      <div class="ritual-item">
+        <div class="ritual-step">03 — Pés</div>
+        <div class="ritual-name" data-i18n="ritual.s3.name">Pedicure<small data-i18n="ritual.s3.desc">Tratamento completo de pés</small></div>
+        <div class="ritual-duration">1h</div>
+        <div class="ritual-price">€24</div>
+      </div>
+      <div class="ritual-item">
+        <div class="ritual-step">04 — Rosto</div>
+        <div class="ritual-name" data-i18n="ritual.s4.name">Buço + Queixo (Cera)<small data-i18n="ritual.s4.desc">Depilação facial de precisão</small></div>
+        <div class="ritual-duration">20 min</div>
+        <div class="ritual-price">€7</div>
+      </div>
+    </div>
+    <div style="margin-top:40px; text-align:center;">
+      <a class="btn-ghost" href="https://www.fresha.com/a/g-beauty-concept-porto-rua-regulo-magauanha-91-i59nqaa0/booking?entryPoint=venue_see_all_services" target="_blank" rel="noopener" data-i18n="ritual.seeall">Ver Todos os 92 Serviços</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<!-- ============ GALLERY ============ -->
+<section class="gallery" id="galeria">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="gallery.eyebrow">Portfólio</div>
+      <h2 data-i18n="gallery.title">O nosso trabalho fala.</h2>
+      <p data-i18n="gallery.sub">Uma seleção dos mais de 99 trabalhos realizados pela nossa equipa.</p>
+    </div>
+    <div class="gallery-grid reveal">
+      <!-- Image 1 -->
+      <a href="https://www.fresha.com/a/g-beauty-concept-porto-rua-regulo-magauanha-91-i59nqaa0" target="_blank" rel="noopener" class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=800&q=80" alt="Manicure vermelha elegante">
+        <div class="gallery-text">Manicure</div>
+      </a>
+      <!-- Image 2 -->
+      <a href="https://www.fresha.com/a/g-beauty-concept-porto-rua-regulo-magauanha-91-i59nqaa0" target="_blank" rel="noopener" class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1610992015734-2fc4ba51b7f5?auto=format&fit=crop&w=500&q=80" alt="Manicure francesa moderna">
+        <div class="gallery-text">Nail Art</div>
+      </a>
+      <!-- Image 3 -->
+      <a href="https://www.fresha.com/a/g-beauty-concept-porto-rua-regulo-magauanha-91-i59nqaa0" target="_blank" rel="noopener" class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=500&q=80" alt="Tratamento de unhas">
+        <div class="gallery-text">Cuidados</div>
+      </a>
+      <!-- Image 4 -->
+      <a href="https://www.fresha.com/a/g-beauty-concept-porto-rua-regulo-magauanha-91-i59nqaa0" target="_blank" rel="noopener" class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1604902396830-aca29e19b067?auto=format&fit=crop&w=800&q=80" alt="Mãos cuidadas">
+        <div class="gallery-text">Estética</div>
+      </a>
+      <!-- Image 5 -->
+      <a href="https://www.fresha.com/a/g-beauty-concept-porto-rua-regulo-magauanha-91-i59nqaa0" target="_blank" rel="noopener" class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?auto=format&fit=crop&w=500&q=80" alt="Pedicure e cuidados">
+        <div class="gallery-text">Pedicure</div>
+      </a>
+      <!-- Image 6 -->
+      <a href="https://www.fresha.com/a/g-beauty-concept-porto-rua-regulo-magauanha-91-i59nqaa0" target="_blank" rel="noopener" class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1632351294906-29d2d4d1c63a?auto=format&fit=crop&w=500&q=80" alt="Nail art detalhada">
+        <div class="gallery-text">Detalhes</div>
+      </a>
+    </div>
+    <div style="margin-top:40px; text-align:center;">
+      <a class="btn-ghost" style="border-color:rgba(27,24,22,0.25); color:var(--ink);" href="https://www.fresha.com/a/g-beauty-concept-porto-rua-regulo-magauanha-91-i59nqaa0" target="_blank" rel="noopener" data-i18n="gallery.seeall">Ver Portfólio Completo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TEAM / ROSTER ============ -->
+<section class="roster" id="equipa">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="roster.eyebrow">A Equipa</div>
+      <h2 data-i18n="roster.title">As mãos por detrás da beleza.</h2>
+      <p data-i18n="roster.sub">Cada especialista escolhe a sua área — para que receba sempre o cuidado mais experiente.</p>
+    </div>
+    <div class="roster-track-wrap reveal">
+      <div class="roster-row"><div class="roster-name"><span class="roster-index">01</span>Naara</div><div class="roster-spec" data-i18n="roster.r1">Unhas</div></div>
+      <div class="roster-row"><div class="roster-name"><span class="roster-index">02</span>Erica</div><div class="roster-spec" data-i18n="roster.r2">Unhas</div></div>
+      <div class="roster-row"><div class="roster-name"><span class="roster-index">03</span>Lorena</div><div class="roster-spec" data-i18n="roster.r3">Unhas</div></div>
+      <div class="roster-row"><div class="roster-name"><span class="roster-index">04</span>Midiã</div><div class="roster-spec" data-i18n="roster.r4">Pestanas e Sobrancelhas</div></div>
+      <div class="roster-row"><div class="roster-name"><span class="roster-index">05</span>Isabela</div><div class="roster-spec" data-i18n="roster.r5">Unhas</div></div>
+      <div class="roster-row"><div class="roster-name"><span class="roster-index">06</span>Debora</div><div class="roster-spec" data-i18n="roster.r6">Unhas</div></div>
+      <div class="roster-row"><div class="roster-name"><span class="roster-index">07</span>Alice</div><div class="roster-spec" data-i18n="roster.r7">Unhas</div></div>
+      <div class="roster-row"><div class="roster-name"><span class="roster-index">08</span>Nathi</div><div class="roster-spec" data-i18n="roster.r8">Unhas e Estética</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section class="reviews">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="reviews.eyebrow">Quem Visitou</div>
+      <h2 data-i18n="reviews.title">334 razões para confiar.</h2>
+    </div>
+    <div class="review-grid reveal">
+      <div class="review-card">
+        <div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-i18n="reviews.r1">"Atendimento impecável, ambiente calmo e resultado perfeito. Já é a minha rotina mensal."</p>
+        </div>
+        <div class="review-meta">Júlia R.</div>
+      </div>
+      <div class="review-card">
+        <div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-i18n="reviews.r2">"Profissionais atentas a cada detalhe. Saí com as unhas exatamente como imaginei."</p>
+        </div>
+        <div class="review-meta">Beatriz G.</div>
+      </div>
+      <div class="review-card">
+        <div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-i18n="reviews.r3">"Espaço bonito, equipa simpática, e a relação qualidade-preço é excelente. Recomendo!"</p>
+        </div>
+        <div class="review-meta">Emma D.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VISIT / LOCATION ============ -->
+<section class="visit" id="visitar">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="visit.eyebrow">Visite-nos</div>
+      <h2 data-i18n="visit.title">No coração de Santo Ildefonso.</h2>
+    </div>
+    <div class="visit-grid reveal">
+      <div class="visit-info">
+        <h3 data-i18n="visit.h3">Informação Prática</h3>
+        <div class="visit-row"><div class="ico" data-i18n="visit.addr">Endereço</div><div class="val">Rua Régulo Magauanha 91, Porto, 4000-290</div></div>
+        <div class="visit-row"><div class="ico" data-i18n="visit.hours">Horário</div><div class="val" data-i18n="visit.hoursval">Seg–Sáb · 9:00 – 19:00<br>Domingo: Fechado</div></div>
+        <div class="visit-row"><div class="ico" data-i18n="visit.extras">Comodidades</div><div class="val" data-i18n="visit.extrasval">Pet-friendly · Estacionamento · Transportes públicos próximos</div></div>
+        <div class="visit-row"><div class="ico" data-i18n="visit.rating">Avaliação</div><div class="val">★★★★★ 5.0 (334)</div></div>
+        <div class="visit-cta">
+          <a class="btn-primary" href="https://www.fresha.com/a/g-beauty-concept-porto-rua-regulo-magauanha-91-i59nqaa0/all-offer?venue=true" target="_blank" rel="noopener" data-i18n="visit.cta">Reservar a Minha Visita</a>
+        </div>
+      </div>
+      <div class="visit-map">
+        <iframe src="https://maps.google.com/maps?q=Rua%20R%C3%A9gulo%20Magauanha%2091%2C%20Porto%2C%204000-290&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa G Beauty Concept"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">G <span>Beauty</span> Concept</div>
+        <p style="margin-top:14px; font-size:14px; max-width:280px;" data-i18n="footer.tag">Um coletivo de beleza no Porto.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4 data-i18n="footer.explore">Explorar</h4>
+          <a href="#ritual" data-i18n="nav.services">Serviços</a>
+          <a href="#galeria" data-i18n="nav.gallery">Galeria</a>
+          <a href="#equipa" data-i18n="nav.team">Equipa</a>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.contact">Contacto</h4>
+          <a href="https://maps.google.com/?daddr=Rua%20R%C3%A9gulo%20Magauanha%2091%2C%20Porto%2C%204000-290" target="_blank" rel="noopener">Rua Régulo Magauanha 91</a>
+          <a href="https://www.fresha.com/a/g-beauty-concept-porto-rua-regulo-magauanha-91-i59nqaa0/all-offer?venue=true" target="_blank" rel="noopener" data-i18n="nav.book">Reservar</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 G Beauty Concept · Porto</div>
+      <div data-i18n="footer.made">Site desenvolvido com cuidado.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---------- Preloader Logic ----------
+window.addEventListener('load', () => {
+  const preloader = document.getElementById('preloader');
+  if (preloader) {
+    setTimeout(() => {
+      preloader.classList.add('hidden');
+    }, 800); // 0.8 seconds baad preloader gayab hoga
+  }
+});
+
+// ---------- Magnetic Buttons Logic ----------
+const magnets = document.querySelectorAll('.btn-primary, .navcta, .drawer-cta');
+
+magnets.forEach(magnet => {
+  magnet.addEventListener('mousemove', (e) => {
+    const rect = magnet.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    
+    // Button ko mouse ki taraf khichna (magnetic effect)
+    magnet.style.transform = `translate(${x * 0.3}px, ${y * 0.4}px)`;
+  });
+
+  magnet.addEventListener('mouseleave', () => {
+    // Button ko wapas apni jagah par bhejna
+    magnet.style.transform = 'translate(0px, 0px)';
+  });
+});
+ // ---------- Video Speed Control ----------
+const heroVideo = document.getElementById('heroVideo');
+if(heroVideo) {
+  heroVideo.playbackRate = 0.5; 
+} 
+// ---------- Language Toggle Logic ----------
+const translations = {
+  pt: {
+    'nav.services': 'Serviços',
+    'nav.gallery': 'Galeria',
+    'nav.team': 'Equipa',
+    'nav.visit': 'Visitar',
+    'nav.book': 'Reservar',
+    'hero.eyebrow': 'Porto · Santo Ildefonso',
+    'hero.title': 'Beleza, <em>sentida</em><br>com intenção.',
+    'hero.sub': 'Um coletivo de beleza no coração do Porto — unhas, estética e cuidados corporais pensados ao detalhe.',
+    'hero.book': 'Reservar Agora',
+    'hero.explore': 'Ver Serviços',
+    'hero.reviews': '334 avaliações',
+    'about.tag': '"Cada detalhe pensado para uma experiência única."',
+    'about.eyebrow': 'Sobre Nós',
+    'about.title': 'Um novo conceito de beleza no Porto.',
+    'about.lead': 'Não somos apenas um salão — somos um coletivo.',
+    'about.body': 'Reunimos especialistas em unhas, estética, pestanas e corpo sob um só teto, na Rua Régulo Magauanha. Cada ritual é conduzido com calma, precisão and atenção ao detalhe — para que saia sempre a sentir-se melhor do que entrou.',
+    'about.stat1': '334 Avaliações',
+    'about.stat2': 'Especialistas',
+    'about.stat3': 'Serviços',
+    'ritual.eyebrow': 'O Ritual',
+    'ritual.title': 'Das mãos ao corpo.',
+    'ritual.sub': 'Os nossos serviços seguem a ordem natural do cuidado — escolha onde quer começar.',
+    'ritual.s1.name': 'Blindagem + Verniz Gel',
+    'ritual.s1.desc': 'Gel polish de longa duração',
+    'ritual.s2.name': 'Manutenção',
+    'ritual.s2.desc': 'Renovação de gel ou acrílico',
+    'ritual.s2.price': 'desde €32',
+    'ritual.s3.name': 'Pedicure',
+    'ritual.s3.desc': 'Tratamento completo de pés',
+    'ritual.s4.name': 'Buço + Queixo (Cera)',
+    'ritual.s4.desc': 'Depilação facial de precisão',
+    'ritual.seeall': 'Ver Todos os 92 Serviços',
+    'gallery.eyebrow': 'Portfólio',
+    'gallery.title': 'O nosso trabalho fala.',
+    'gallery.sub': 'Uma seleção dos mais de 99 trabalhos realizados pela nossa equipa.',
+    'gallery.seeall': 'Ver Portfólio Completo',
+    'roster.eyebrow': 'A Equipa',
+    'roster.title': 'As mãos por detrás da beleza.',
+    'roster.sub': 'Cada especialista escolhe a sua área — para que receba sempre o cuidado mais experiente.',
+    'roster.r1': 'Unhas', 'roster.r2': 'Unhas', 'roster.r3': 'Unhas',
+    'roster.r4': 'Pestanas e Sobrancelhas',
+    'roster.r5': 'Unhas', 'roster.r6': 'Unhas', 'roster.r7': 'Unhas',
+    'roster.r8': 'Unhas e Estética',
+    'reviews.eyebrow': 'Quem Visitou',
+    'reviews.title': '334 razões para confiar.',
+    'reviews.r1': '"Atendimento impecável, ambiente calmo e resultado perfeito. Já é a minha rotina mensal."',
+    'reviews.r2': '"Profissionais atentas a cada detalhe. Saí com as unhas exatamente como imaginei."',
+    'reviews.r3': '"Espaço bonito, equipa simpática, e a relação qualidade-preço é excelente. Recomendo!"',
+    'visit.eyebrow': 'Visite-nos',
+    'visit.title': 'No coração de Santo Ildefonso.',
+    'visit.h3': 'Informação Prática',
+    'visit.addr': 'Endereço',
+    'visit.hours': 'Horário',
+    'visit.hoursval': 'Seg–Sáb · 9:00 – 19:00<br>Domingo: Fechado',
+    'visit.extras': 'Comodidades',
+    'visit.extrasval': 'Pet-friendly · Estacionamento · Transportes públicos próximos',
+    'visit.rating': 'Avaliação',
+    'visit.cta': 'Reservar a Minha Visita',
+    'footer.tag': 'Um coletivo de beleza no Porto.',
+    'footer.explore': 'Explorar',
+    'footer.contact': 'Contacto',
+    'footer.made': 'Site desenvolvido com cuidado.'
+  },
+  en: {
+    'nav.services': 'Services',
+    'nav.gallery': 'Gallery',
+    'nav.team': 'Team',
+    'nav.visit': 'Visit',
+    'nav.book': 'Book Now',
+    'hero.eyebrow': 'Porto · Santo Ildefonso',
+    'hero.title': 'Beauty, <em>felt</em><br>with intention.',
+    'hero.sub': 'A beauty collective in the heart of Porto — nails, aesthetics, and body care designed in detail.',
+    'hero.book': 'Book Now',
+    'hero.explore': 'View Services',
+    'hero.reviews': '334 reviews',
+    'about.tag': '"Every detail designed for a unique experience."',
+    'about.eyebrow': 'About Us',
+    'about.title': 'A new concept of beauty in Porto.',
+    'about.lead': 'We are not just a salon — we are a collective.',
+    'about.body': 'We bring together specialists in nails, aesthetics, lashes, and body under one roof, at Rua Régulo Magauanha. Each ritual is conducted with calm, precision, and attention to detail — so you always leave feeling better than you arrived.',
+    'about.stat1': '334 Reviews',
+    'about.stat2': 'Specialists',
+    'about.stat3': 'Services',
+    'ritual.eyebrow': 'The Ritual',
+    'ritual.title': 'From hands to body.',
+    'ritual.sub': 'Our services follow the natural order of care — choose where you want to start.',
+    'ritual.s1.name': 'Overlay + Gel Polish',
+    'ritual.s1.desc': 'Long-lasting gel polish',
+    'ritual.s2.name': 'Maintenance',
+    'ritual.s2.desc': 'Gel or acrylic renewal',
+    'ritual.s2.price': 'from €32',
+    'ritual.s3.name': 'Pedicure',
+    'ritual.s3.desc': 'Complete foot treatment',
+    'ritual.s4.name': 'Upper Lip + Chin (Wax)',
+    'ritual.s4.desc': 'Precision facial waxing',
+    'ritual.seeall': 'View All 92 Services',
+    'gallery.eyebrow': 'Portfolio',
+    'gallery.title': 'Our work speaks.',
+    'gallery.sub': 'A selection of over 99 works done by our team.',
+    'gallery.seeall': 'View Full Portfolio',
+    'roster.eyebrow': 'The Team',
+    'roster.title': 'The hands behind the beauty.',
+    'roster.sub': 'Each specialist chooses their area — so you always receive the most experienced care.',
+    'roster.r1': 'Nails', 'roster.r2': 'Nails', 'roster.r3': 'Nails',
+    'roster.r4': 'Lashes and Brows',
+    'roster.r5': 'Nails', 'roster.r6': 'Nails', 'roster.r7': 'Nails',
+    'roster.r8': 'Nails and Aesthetics',
+    'reviews.eyebrow': 'Who Visited',
+    'reviews.title': '334 reasons to trust.',
+    'reviews.r1': '"Impeccable service, calm environment, and perfect result. It\'s already my monthly routine."',
+    'reviews.r2': '"Professionals attentive to every detail. I left with my nails exactly as I imagined."',
+    'reviews.r3': '"Beautiful space, friendly team, and the quality-price ratio is excellent. I recommend it!"',
+    'visit.eyebrow': 'Visit Us',
+    'visit.title': 'In the heart of Santo Ildefonso.',
+    'visit.h3': 'Practical Information',
+    'visit.addr': 'Address',
+    'visit.hours': 'Hours',
+    'visit.hoursval': 'Mon–Sat · 9:00 AM – 7:00 PM<br>Sunday: Closed',
+    'visit.extras': 'Amenities',
+    'visit.extrasval': 'Pet-friendly · Parking · Public transport nearby',
+    'visit.rating': 'Rating',
+    'visit.cta': 'Book My Visit',
+    'footer.tag': 'A beauty collective in Porto.',
+    'footer.explore': 'Explore',
+    'footer.contact': 'Contact',
+    'footer.made': 'Website designed with care.'
+  },
+  es: {
+    'nav.services': 'Servicios',
+    'nav.gallery': 'Galería',
+    'nav.team': 'Equipo',
+    'nav.visit': 'Visitar',
+    'nav.book': 'Reservar',
+    'hero.eyebrow': 'Oporto · Santo Ildefonso',
+    'hero.title': 'Belleza, <em>sentida</em><br>con intención.',
+    'hero.sub': 'Un colectivo de belleza en el corazón de Oporto — uñas, estética y cuidados corporales pensados al detalle.',
+    'hero.book': 'Reservar Ahora',
+    'hero.explore': 'Ver Servicios',
+    'hero.reviews': '334 reseñas',
+    'about.tag': '"Cada detalle pensado para una experiencia única."',
+    'about.eyebrow': 'Sobre Nosotros',
+    'about.title': 'Un nuevo concepto de belleza en Oporto.',
+    'about.lead': 'No somos solo un salón — somos un colectivo.',
+    'about.body': 'Reunimos especialistas en uñas, estética, pestañas y cuerpo bajo un mismo techo, en la Rua Régulo Magauanha. Cada ritual se realiza con calma, precisión y atención al detalle — para que siempre salgas sintiéndote mejor que cuando entraste.',
+    'about.stat1': '334 Reseñas',
+    'about.stat2': 'Especialistas',
+    'about.stat3': 'Servicios',
+    'ritual.eyebrow': 'El Ritual',
+    'ritual.title': 'De las manos al cuerpo.',
+    'ritual.sub': 'Nuestros servicios siguen el orden natural del cuidado — elige dónde quieres empezar.',
+    'ritual.s1.name': 'Blindaje + Esmalte Gel',
+    'ritual.s1.desc': 'Esmalte gel de larga duración',
+    'ritual.s2.name': 'Mantenimiento',
+    'ritual.s2.desc': 'Renovación de gel o acrílico',
+    'ritual.s2.price': 'desde €32',
+    'ritual.s3.name': 'Pedicura',
+    'ritual.s3.desc': 'Tratamiento completo de pies',
+    'ritual.s4.name': 'Bigote + Barbilla (Cera)',
+    'ritual.s4.desc': 'Depilación facial de precisión',
+    'ritual.seeall': 'Ver Todos los 92 Servicios',
+    'gallery.eyebrow': 'Portafolio',
+    'gallery.title': 'Nuestro trabajo habla.',
+    'gallery.sub': 'Una selección de más de 99 trabajos realizados por nuestro equipo.',
+    'gallery.seeall': 'Ver Portafolio Completo',
+    'roster.eyebrow': 'El Equipo',
+    'roster.title': 'Las manos detrás de la belleza.',
+    'roster.sub': 'Cada especialista elige su área — para que siempre recibas el cuidado más experimentado.',
+    'roster.r1': 'Uñas', 'roster.r2': 'Uñas', 'roster.r3': 'Uñas',
+    'roster.r4': 'Pestañas y Cejas',
+    'roster.r5': 'Uñas', 'roster.r6': 'Uñas', 'roster.r7': 'Uñas',
+    'roster.r8': 'Uñas y Estética',
+    'reviews.eyebrow': 'Quienes Visitaron',
+    'reviews.title': '334 razones para confiar.',
+    'reviews.r1': '"Atención impecable, ambiente tranquilo y resultado perfecto. Ya es mi rutina mensual."',
+    'reviews.r2': '"Profesionales atentas a cada detalle. Salí con las uñas exactamente como imaginé."',
+    'reviews.r3': '"Espacio bonito, equipo simpático, y la relación calidad-precio es excelente. ¡Lo recomiendo!"',
+    'visit.eyebrow': 'Visítenos',
+    'visit.title': 'En el corazón de Santo Ildefonso.',
+    'visit.h3': 'Información Práctica',
+    'visit.addr': 'Dirección',
+    'visit.hours': 'Horario',
+    'visit.hoursval': 'Lun–Sáb · 9:00 – 19:00<br>Domingo: Cerrado',
+    'visit.extras': 'Comodidades',
+    'visit.extrasval': 'Pet-friendly · Estacionamiento · Transporte público cercano',
+    'visit.rating': 'Valoración',
+    'visit.cta': 'Reservar Mi Visita',
+    'footer.tag': 'Un colectivo de belleza en Oporto.',
+    'footer.explore': 'Explorar',
+    'footer.contact': 'Contacto',
+    'footer.made': 'Sitio web diseñado con cuidado.'
+  }
+};
+
+function setLanguage(lang) {
+  if (!translations[lang]) return;
+  
+  // Update active button state
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.dataset.lang === lang) {
+      btn.classList.add('active');
+    }
+  });
+
+  // Update text content
+  document.querySelectorAll('[data-i18n]').forEach(element => {
+    const key = element.getAttribute('data-i18n');
+    if (translations[lang][key]) {
+      element.innerHTML = translations[lang][key];
+    }
+  });
+}
+
+// Add event listeners to language buttons
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    setLanguage(btn.dataset.lang);
+  });
+});
+
+// ---------- Custom Cursor Animation ----------
+const dot = document.getElementById('cursorDot');
+const outline = document.getElementById('cursorOutline');
+
+let mouseX = 0, mouseY = 0;
+let outlineX = 0, outlineY = 0;
+
+window.addEventListener('mousemove', e => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  
+  // The dot follows exactly
+  dot.style.left = mouseX + 'px';
+  dot.style.top = mouseY + 'px';
+});
+
+// The outline follows with a smoothing effect
+function animateOutline() {
+  outlineX += (mouseX - outlineX) * 0.15;
+  outlineY += (mouseY - outlineY) * 0.15;
+  
+  outline.style.left = outlineX + 'px';
+  outline.style.top = outlineY + 'px';
+  
+  requestAnimationFrame(animateOutline);
+}
+animateOutline();
+
+// Add hover effect to clickable elements
+document.querySelectorAll('a, button, .ritual-item').forEach(el => {
+  el.addEventListener('mouseenter', () => outline.classList.add('hovered'));
+  el.addEventListener('mouseleave', () => outline.classList.remove('hovered'));
+});
+
+// ---------- Toggle Mobile Menu ----------
+const navToggle = document.getElementById('navToggle');
+const drawer = document.getElementById('drawer');
+const drawerClose = document.getElementById('drawerClose');
+
+if(navToggle && drawer) {
+  navToggle.addEventListener('click', () => {
+    drawer.classList.add('open');
+  });
+}
+
+if(drawerClose && drawer) {
+  drawerClose.addEventListener('click', () => {
+    drawer.classList.remove('open');
+  });
+}
+
+// Close drawer when clicking any link inside it
+const drawerLinks = drawer.querySelectorAll('a');
+drawerLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    drawer.classList.remove('open');
+  });
+});
+
+// ---------- Header Scroll Effect ----------
+window.addEventListener('scroll', () => {
+  const header = document.getElementById('siteHeader');
+  if(window.scrollY > 50) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+
+// ---------- Simple Reveal on Scroll ----------
+const reveals = document.querySelectorAll('.reveal');
+const revealOnScroll = () => {
+  reveals.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if(rect.top < window.innerHeight * 0.85) {
+      el.classList.add('in');
+    }
+  });
+};
+window.addEventListener('scroll', revealOnScroll);
+window.addEventListener('load', revealOnScroll);
+
+// Initialize default language
+setLanguage('pt');
+</script>
+</body>
+</html>
